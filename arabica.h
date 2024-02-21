@@ -9,11 +9,11 @@
 #include <stdlib.h>
 #include <sys/time.h>
 #include <sys/resource.h>
+#include <byteswap.h>
 
 // Include external C libraries below
 
 
 // Include project files below
-#include "abc_parser.c"
 
 #endif
