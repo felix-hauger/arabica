@@ -1,7 +1,7 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -MMD
 NAME = arabica
-SRC = arabica.c
+SRC = arabica.c abc_parser.c
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
