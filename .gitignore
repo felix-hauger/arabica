@@ -5,3 +5,4 @@ test*
 bytecode
 *.d
 build/
+objects/
