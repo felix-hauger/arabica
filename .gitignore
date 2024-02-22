@@ -3,3 +3,5 @@
 arabica
 test*
 bytecode
+*.d
+build/
