@@ -1,7 +1,7 @@
 #define NUM_OPERATIONS 28
 #include "arabica.h"
 
-int TestOperation(char *functionName) {
+int getFunctionIdFromName(char *functionName) {
     const char *operations[NUM_OPERATIONS] = {
         "LOAD_VAL",
         "READ_VAR",
@@ -40,4 +40,28 @@ int TestOperation(char *functionName) {
     }
 
     return 0;
+}
+
+void writeHeader(int filedes, int programSize, char programName[PROGRAM_NAME_SIZE])
+{
+    write(filedes, "CODE", 4);
+
+    writeIntegerForCompile(filedes, programSize);
+    // write(filedes, &(bswap_32(programSize)), sizeof(programSize));
+
+
+    write(filedes, programName, PROGRAM_NAME_SIZE);
+}
+
+void writeIntegerForCompile(int filedes, int integer)
+{
+    // Switch the endianness
+    int reversed = bswap_32(integer);
+
+    write(filedes, &reversed, sizeof(reversed));
+}
+
+void writeStringForCompile(int filedes, char *input)
+{
+    write(filedes, &input, sizeof(input));
 }

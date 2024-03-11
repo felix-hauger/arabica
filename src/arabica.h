@@ -1,6 +1,8 @@
 #ifndef ARABICA
 #define ARABICA
 
+#define PROGRAM_NAME_SIZE 16
+
 
 // Include C libraries below
 #include <fcntl.h>
@@ -16,7 +18,12 @@
 
 
 // Include project files below
-int TestOperation(char *functionName);
+// Write project's functions signatures below
+// int TestOperation(char *functionName);
 char* getName(int argc, char *argv[]);
+int getFunctionIdFromName(char *functionName);
+void writeHeader(int filedes, int programSize, char programName[PROGRAM_NAME_SIZE]);
+void writeIntegerForCompile(int filedes, int integer);
+void writeStringForCompile(int filedes, char *input);
 
 #endif
