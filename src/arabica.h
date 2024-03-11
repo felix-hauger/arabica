@@ -17,4 +17,6 @@
 
 // Include project files below
 int TestOperation(char *functionName);
+char* getName(int argc, char *argv[]);
+
 #endif
