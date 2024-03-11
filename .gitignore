@@ -1,8 +1,6 @@
+*.d
 .vscode/
 *.o
 arabica
 test*
 bytecode
-*.d
-build/
-objects/
