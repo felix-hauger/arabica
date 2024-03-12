@@ -28,6 +28,8 @@ int main(int argc, char **argv)
     char add = getFunctionIdFromName("ADD");
     char print_val = getFunctionIdFromName("PRINT_VAL");
 
+    parse_abc("test.abc");
+
     write(filedes, &load_val, 1);
     writeIntegerForCompile(filedes, 42);
     write(filedes, &load_val, 1);
