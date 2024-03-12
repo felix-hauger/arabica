@@ -1,6 +1,7 @@
 #include "arabica.h"
 
-int main(int argc, char **argv){
+int main(int argc, char **argv)
+{
     printf("Number of args: %d\n", argc);
 
     int i = 0;

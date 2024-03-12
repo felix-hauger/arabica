@@ -3,7 +3,7 @@ CFLAGS = -Wall -Wextra -Werror -MMD
 NAME = arabica
 SRC_DIR = src/
 BUILD_DIR = build/
-SRC = arabica.c TestOperation.c getName.c
+SRC = main.c TestOperation.c getName.c
 SRCS = $(addprefix $(SRC_DIR), $(SRC))
 OBJ = $(SRCS:$(SRC_DIR)%.c=$(BUILD_DIR)%.o)
 
