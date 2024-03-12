@@ -13,7 +13,7 @@ int getFunctionIdFromName(char *functionName) {
         "MOD",
         "JMP",
         "JMP_IF_ZERO",
-        "JUMP_IF_TRUE",
+        "JMP_IF_TRUE",
         "EQ",
         "NEQ",
         "GT",
