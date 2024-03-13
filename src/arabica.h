@@ -20,6 +20,7 @@
 // Structures
 typedef struct Instruction {
     char *instruction;
+    char code; // Instruction code stored on 1 byte
     char arguments[ARGUMENTS_MAX_NUM][ARGUMENT_MAX_SIZE];
     int size; // Maybe not needed
 }_Instruction;
@@ -28,7 +29,7 @@ typedef struct Instruction {
 
 // Write project's functions signatures below
 char* getName(int argc, char *argv[]);
-int getFunctionIdFromName(char *functionName);
+int getFunctionCodeFromName(char *functionName);
 void writeHeader(int filedes, int programSize, char programName[PROGRAM_NAME_SIZE]);
 void writeIntegerForCompile(int filedes, int integer);
 void writeStringForCompile(int filedes, char *input);

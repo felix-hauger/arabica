@@ -13,6 +13,7 @@ $(NAME): $(OBJ)
 	$(CC) -o $@ $^
 
 $(BUILD_DIR)%.o: $(SRC_DIR)%.c
+	$(shell mkdir -p $(BUILD_DIR))
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 clean:
