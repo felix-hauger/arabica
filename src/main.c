@@ -13,11 +13,6 @@ int main(int argc, char **argv)
 
     char *programName = "abcdefghijklmnop";
 
-
-
-    // int result = getFunctionIdFromName("ADD");
-    // int reversed = bswap_32(result);
-
     // Open file with read / write, create it if it doesn't exist
     int filedes = open("bytecode", O_CREAT | O_RDWR);
 
@@ -36,7 +31,6 @@ int main(int argc, char **argv)
     writeIntegerForCompile(filedes, 69);
     write(filedes, &add, 1);
     write(filedes, &print_val, 1);
- 
 
     //missing the total number of bytes in the file
 
@@ -46,13 +40,6 @@ int main(int argc, char **argv)
     
     // char buffer[11] = {0}; // Initialize buffer with 11 zero bytes
     // write(1, buffer, 11);   // Write 11 bytes of zero to stdout
-
-    // printf("Result: %d\n", result);
-    //result = bswap_32(result)
-
-    // write(filedes, &reversed , 4);
-    // writeIntegerForCompile(filedes, result);
-    
 
     return 0;
 }

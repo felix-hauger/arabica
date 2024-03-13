@@ -1,10 +1,10 @@
 #ifndef ARABICA
 #define ARABICA
 
+// Define constants below
 #define PROGRAM_NAME_SIZE 16
 #define ARGUMENTS_MAX_NUM 2
 #define ARGUMENT_MAX_SIZE 100
-
 
 // Include C libraries below
 #include <fcntl.h>
@@ -26,10 +26,7 @@ typedef struct Instruction {
 
 // Include external C libraries below
 
-
-// Include project files below
 // Write project's functions signatures below
-// int TestOperation(char *functionName);
 char* getName(int argc, char *argv[]);
 int getFunctionIdFromName(char *functionName);
 void writeHeader(int filedes, int programSize, char programName[PROGRAM_NAME_SIZE]);
