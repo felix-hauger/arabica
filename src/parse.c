@@ -33,11 +33,11 @@ _Instruction *parse_abc(char *filename)
         printf("  %s\n", line);
         char **splitted_line = split(line, " ");
 
-        current_instruction.instruction = splitted_line[0];
+        current_instruction.instruction = my_strdup(trim(splitted_line[0]));
         if (splitted_line[1] != NULL) {
-            my_strcpy(current_instruction.arguments[0], splitted_line[1]);
+            my_strcpy(current_instruction.arguments[0], trim(splitted_line[1]));
             if (splitted_line[2] != NULL) {
-                my_strcpy(current_instruction.arguments[1], splitted_line[2]);
+                my_strcpy(current_instruction.arguments[1], trim(splitted_line[2]));
             }
         }
 
@@ -49,9 +49,9 @@ _Instruction *parse_abc(char *filename)
     int i = 0;
 
     while (result[i].instruction != NULL) {
-        printf("Instruction: %s \n", result[i].instruction);
-        printf("Argument 1: %s \n", result[i].arguments[0]);
-        printf("Argument 2: %s \n", result[i].arguments[1]);
+        printf("Instruction: %s\n", result[i].instruction);
+        printf("Argument 1: %s\n", result[i].arguments[0]);
+        printf("Argument 2: %s\n", result[i].arguments[1]);
         i++;
     }
 

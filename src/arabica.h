@@ -15,6 +15,7 @@
 #include <sys/resource.h>
 #include <byteswap.h>
 #include <string.h>
+#include <ctype.h>
 
 // Structures
 typedef struct Instruction {
@@ -38,6 +39,8 @@ _Instruction *parse_abc(char *file_name);
 
 // Utils
 char *my_strcpy(char *dest, char *src);
+char *my_strdup(char *src);
 char **split(char *s, char *delim);
+char *trim(char *s);
 
 #endif
