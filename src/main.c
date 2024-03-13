@@ -19,9 +19,9 @@ int main(int argc, char **argv)
     // char *processName = getName(argc, argv); // get the name of the process
     writeHeader(filedes, 24, programName);
 
-    char load_val = getFunctionIdFromName("LOAD_VAL");
-    char add = getFunctionIdFromName("ADD");
-    char print_val = getFunctionIdFromName("PRINT_VAL");
+    char load_val = getFunctionCodeFromName("LOAD_VAL");
+    char add = getFunctionCodeFromName("ADD");
+    char print_val = getFunctionCodeFromName("PRINT_VAL");
 
     parse_abc("test.abc");
 

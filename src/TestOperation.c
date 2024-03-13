@@ -1,7 +1,7 @@
 #define NUM_OPERATIONS 28
 #include "arabica.h"
 
-int getFunctionIdFromName(char *functionName) {
+int getFunctionCodeFromName(char *functionName) {
     const char *operations[NUM_OPERATIONS] = {
         "LOAD_VAL",
         "READ_VAR",
