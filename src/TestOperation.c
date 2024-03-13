@@ -47,8 +47,6 @@ void writeHeader(int filedes, int programSize, char programName[PROGRAM_NAME_SIZ
     write(filedes, "CODE", 4);
 
     writeIntegerForCompile(filedes, programSize);
-    // write(filedes, &(bswap_32(programSize)), sizeof(programSize));
-
 
     write(filedes, programName, PROGRAM_NAME_SIZE);
 }
