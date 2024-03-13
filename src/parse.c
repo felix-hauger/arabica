@@ -26,11 +26,11 @@ _Instruction *parse_abc(char *filename)
     int current_result_index = 0;
 
     while (!feof(filedes)) {
-        struct Instruction current_instruction;
+        struct Instruction current_instruction = {.arguments = {{"No arg"}, {"No arg"}}, .instruction = NULL, .size = 0};
 
         fgets(line, MAX_LINE_SIZE, filedes);
 
-        printf("%s\n", line);
+        printf("  %s\n", line);
         char **splitted_line = split(line, " ");
 
         current_instruction.instruction = splitted_line[0];
@@ -49,9 +49,9 @@ _Instruction *parse_abc(char *filename)
     int i = 0;
 
     while (result[i].instruction != NULL) {
-        printf("Instruction: %s\n", result[i].instruction);
-        printf("Argument 1: %s\n", result[i].arguments[0]);
-        printf("Argument 2: %s\n", result[i].arguments[1]);
+        printf("Instruction: %s \n", result[i].instruction);
+        printf("Argument 1: %s \n", result[i].arguments[0]);
+        printf("Argument 2: %s \n", result[i].arguments[1]);
         i++;
     }
 
