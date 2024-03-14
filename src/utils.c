@@ -74,3 +74,21 @@ char *trim(char *s)
 {
     return rtrim(ltrim(s));
 }
+
+int char_is_digit(char c)
+{
+    return (c >= '0' && c <= '9') ? 1 : 0;
+}
+
+int str_is_digit(char *string)
+{
+    int i = 0;
+
+    while (string[i] != 0) {
+        if (!char_is_digit(string[i])) return 0;
+
+        i++;
+    }
+
+    return 1;
+}

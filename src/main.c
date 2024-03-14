@@ -24,7 +24,11 @@ int main(int argc, char **argv)
     char add = getFunctionCodeFromName("ADD");
     char print_val = getFunctionCodeFromName("PRINT_VAL");
 
-    
+    _Instruction *instructions = parse_abc("test.abc");
+
+    size_t program_size = get_program_size(instructions);
+
+    printf("Program size: %ld\n", program_size);
 
     write(filedes, &load_val, 1);
     writeIntegerForCompile(filedes, 42);
@@ -53,19 +57,16 @@ int main(int argc, char **argv)
         write(filedes, &instruction->code, 1);
 
         // if the args are declared ( not "No arg" ) write them to the file
-        if (strcmp(instruction->arguments[0], "No arg") != 0) {
-            if (isdigit(instruction->arguments[0][0])) {  //check if it is a integer
+        if (instruction->arguments[0] != NULL) {
+            if (str_is_digit(instruction->arguments[0])) {  //check if it is a integer
                 writeIntegerForCompile(filedes, atoi(instruction->arguments[0])); 
-            
             } else {
                 writeStringForCompile(filedes, instruction->arguments[0]);//else its an string
-
-               
             }
             //if arg 2 is declared write it to the file
-            if (strcmp(instruction->arguments[1], "No arg") != 0) {
-                if (isdigit(instruction->arguments[1][0])) {
-                     writeIntegerForCompile(filedes, atoi(instruction->arguments[1]));
+            if (instruction->arguments[1] != NULL) {
+                if (str_is_digit(instruction->arguments[1])) {
+                    writeIntegerForCompile(filedes, atoi(instruction->arguments[1]));
                 } else {
                     writeStringForCompile(filedes, instruction->arguments[1]);
                 }
