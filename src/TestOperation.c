@@ -61,5 +61,5 @@ void writeIntegerForCompile(int filedes, int integer)
 
 void writeStringForCompile(int filedes, char *input)
 {
-    write(filedes, &input, sizeof(input));
+    write(filedes, input, strlen(input));
 }
