@@ -43,13 +43,28 @@ int getFunctionCodeFromName(char *functionName) {
     return 0;
 }
 
-void writeHeader(int filedes, int programSize, char programName[PROGRAM_NAME_SIZE])
+void writeHeader(int filedes, int programSize, char *programName)
 {
-    write(filedes, "CODE", 4);
+    write(filedes, "CODE", 4); // WRITE CODE
+   
+    writeIntegerForCompile(filedes, programSize); // WRITE Size of the program
 
-    writeIntegerForCompile(filedes, programSize);
+    int len = strlen(programName);
 
-    write(filedes, programName, PROGRAM_NAME_SIZE);
+    if (len < PROGRAM_NAME_SIZE){
+        writeStringForCompile(filedes, programName); // WRITE Program name
+        for (int i = 0; i < PROGRAM_NAME_SIZE - len; i++){
+            write(filedes, "\0", 1);    // WRITE 0 bytes to fill the rest of the space
+        }
+    } else if (len == PROGRAM_NAME_SIZE){
+        writeStringForCompile(filedes, programName); // WRITE Program name if the length of the program name is = 16
+    } else{
+        printf("ERROR : Program name is too long\n");
+        exit(1);
+    }
+   
+    
+    
 }
 
 void writeIntegerForCompile(int filedes, int integer)

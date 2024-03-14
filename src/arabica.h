@@ -29,7 +29,7 @@ typedef struct Instruction {
 // Write project's functions signatures below
 char* getName(int argc, char *argv[]);
 int getFunctionCodeFromName(char *functionName);
-void writeHeader(int filedes, int programSize, char programName[PROGRAM_NAME_SIZE]);
+void writeHeader(int filedes, int programSize, char *programName);
 void writeIntegerForCompile(int filedes, int integer);
 void writeStringForCompile(int filedes, char *input);
 _Instruction *parse_abc(char *file_name);
