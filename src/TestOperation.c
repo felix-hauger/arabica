@@ -1,4 +1,3 @@
-#include <stdio.h>
 #define NUM_OPERATIONS 28
 #include "arabica.h"
 
