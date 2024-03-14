@@ -69,6 +69,7 @@ size_t get_argument_size(char *arg)
     size_t result;
 
     if (str_is_digit(arg)) {
+        //! Might need to test if the value is too high for an int
         result = 4;
     } else {
         result = my_strlen(arg);
@@ -80,12 +81,11 @@ size_t get_argument_size(char *arg)
 size_t get_program_size(_Instruction *instructions)
 {
     size_t result = 0;
-    printf("Init Result: %ld\n", result);
     int i = 0;
 
     while (instructions[i].instruction != NULL) {
         result++;
-        printf("Result: %ld\n", result);
+        printf("Program size: %ld\n", result);
         if (instructions[i].arguments[0] != NULL) {
                 result += get_argument_size(instructions[i].arguments[0]);
             if (instructions[i].arguments[1] != NULL) {
@@ -93,7 +93,7 @@ size_t get_program_size(_Instruction *instructions)
             }
         }
         i++;
-        printf("Result: %ld\n\n", result);
+        printf("Program size: %ld\n\n", result);
     }
     return result;
 }
