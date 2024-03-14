@@ -80,7 +80,7 @@ int char_is_digit(char c)
     return (c >= '0' && c <= '9') ? 1 : 0;
 }
 
-int str_is_int(char *string)
+int str_is_digit(char *string)
 {
     int i = 0;
 

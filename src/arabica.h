@@ -40,7 +40,7 @@ char *my_strcpy(char *dest, char *src);
 char *my_strdup(char *src);
 char **split(char *s, char *delim);
 char *trim(char *s);
-int str_is_int(char *s);
+int str_is_digit(char *s);
 int my_strlen(char *s);
 
 #endif

@@ -63,6 +63,20 @@ _Instruction *parse_abc(char *filename)
     return result;
 }
 
+
+size_t get_argument_size(char *arg)
+{
+    size_t result;
+
+    if (str_is_digit(arg)) {
+        result = 4;
+    } else {
+        result = my_strlen(arg);
+    }
+
+    return result;
+}
+
 size_t get_program_size(_Instruction *instructions)
 {
     size_t result = 0;
@@ -73,21 +87,9 @@ size_t get_program_size(_Instruction *instructions)
         result++;
         printf("Result: %ld\n", result);
         if (instructions[i].arguments[0] != NULL) {
-            if (str_is_int(instructions[i].arguments[0])) {
-                result += 4;
-            } else {
-                printf("str: %s\n", instructions[i].arguments[0]);
-                printf("strlen: %d\n", my_strlen(instructions[i].arguments[0]));
-                result += my_strlen(instructions[i].arguments[0]);
-            }
+                result += get_argument_size(instructions[i].arguments[0]);
             if (instructions[i].arguments[1] != NULL) {
-                if (str_is_int(instructions[i].arguments[0])) {
-                    result += 4;
-                } else {
-                    printf("str: %s\n", instructions[i].arguments[0]);
-                    printf("strlen: %d\n", my_strlen(instructions[i].arguments[0]));
-                    result += my_strlen(instructions[i].arguments[0]);
-                }
+                result += get_argument_size(instructions[i].arguments[0]);
             }
         }
         i++;
