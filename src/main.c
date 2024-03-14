@@ -17,7 +17,7 @@ int main(int argc, char **argv)
     int filedes = open("bytecode", O_CREAT | O_RDWR);
 
     // char *processName = getName(argc, argv); // get the name of the process
-    writeHeader(filedes, 18, programName);
+    writeHeader(filedes, 20, programName);
 
     /*
     char load_val = getFunctionCodeFromName("LOAD_VAL");
@@ -54,22 +54,17 @@ int main(int argc, char **argv)
 
         // if the args are declared ( not "No arg" ) write them to the file
         if (strcmp(instruction->arguments[0], "No arg") != 0) {
-            if (isdigit(instruction->arguments[0][1])) {  //check if it is a integer
-                printf("arg 1 is an integer\n");
+            if (isdigit(instruction->arguments[0][0])) {  //check if it is a integer
                 writeIntegerForCompile(filedes, atoi(instruction->arguments[0])); 
-                printf("arg 1 printed\n");
-               
+            
             } else {
-                printf("arg 1 is a string\n");
-                printf("arg1 = %s\n", instruction->arguments[0]);
                 writeStringForCompile(filedes, instruction->arguments[0]);//else its an string
-               
-                printf("arg 1 printed\n");
+
                
             }
             //if arg 2 is declared write it to the file
             if (strcmp(instruction->arguments[1], "No arg") != 0) {
-                if (isdigit(instruction->arguments[1])) {
+                if (isdigit(instruction->arguments[1][0])) {
                      writeIntegerForCompile(filedes, atoi(instruction->arguments[1]));
                 } else {
                     writeStringForCompile(filedes, instruction->arguments[1]);
