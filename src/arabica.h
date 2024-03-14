@@ -4,7 +4,6 @@
 // Define constants below
 #define PROGRAM_NAME_SIZE 16
 #define ARGUMENTS_MAX_NUM 2
-#define ARGUMENT_MAX_SIZE 100
 
 // Include C libraries below
 #include <fcntl.h>
@@ -21,7 +20,7 @@
 typedef struct Instruction {
     char *instruction;
     char code; // Instruction code stored on 1 byte
-    char arguments[ARGUMENTS_MAX_NUM][ARGUMENT_MAX_SIZE];
+    char *arguments[ARGUMENTS_MAX_NUM];
     int size; // Maybe not needed
 }_Instruction;
 
@@ -34,11 +33,14 @@ void writeHeader(int filedes, int programSize, char programName[PROGRAM_NAME_SIZ
 void writeIntegerForCompile(int filedes, int integer);
 void writeStringForCompile(int filedes, char *input);
 _Instruction *parse_abc(char *file_name);
+size_t get_program_size(_Instruction *instructions);
 
 // Utils
 char *my_strcpy(char *dest, char *src);
 char *my_strdup(char *src);
 char **split(char *s, char *delim);
 char *trim(char *s);
+int str_is_int(char *s);
+int my_strlen(char *s);
 
 #endif

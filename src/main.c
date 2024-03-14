@@ -23,7 +23,11 @@ int main(int argc, char **argv)
     char add = getFunctionCodeFromName("ADD");
     char print_val = getFunctionCodeFromName("PRINT_VAL");
 
-    parse_abc("test.abc");
+    _Instruction *instructions = parse_abc("test.abc");
+
+    size_t program_size = get_program_size(instructions);
+
+    printf("Program size: %ld\n", program_size);
 
     write(filedes, &load_val, 1);
     writeIntegerForCompile(filedes, 42);

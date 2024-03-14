@@ -26,7 +26,10 @@ _Instruction *parse_abc(char *filename)
     int current_result_index = 0;
 
     while (!feof(filedes)) {
-        struct Instruction current_instruction = {.arguments = {{"No arg"}, {"No arg"}}, .instruction = NULL, .size = 0};
+        struct Instruction current_instruction;
+
+        current_instruction.arguments[0] = NULL;
+        current_instruction.arguments[1] = NULL;
 
         fgets(line, MAX_LINE_SIZE, filedes);
 
@@ -36,9 +39,9 @@ _Instruction *parse_abc(char *filename)
         current_instruction.instruction = my_strdup(trim(splitted_line[0]));
         current_instruction.code = getFunctionCodeFromName(current_instruction.instruction);
         if (splitted_line[1] != NULL) {
-            my_strcpy(current_instruction.arguments[0], trim(splitted_line[1]));
+            current_instruction.arguments[0] = my_strdup(trim(splitted_line[1]));
             if (splitted_line[2] != NULL) {
-                my_strcpy(current_instruction.arguments[1], trim(splitted_line[2]));
+                current_instruction.arguments[1] = my_strdup(trim(splitted_line[2]));
             }
         }
 
@@ -57,5 +60,38 @@ _Instruction *parse_abc(char *filename)
     //     i++;
     // }
 
+    return result;
+}
+
+size_t get_program_size(_Instruction *instructions)
+{
+    size_t result = 0;
+    printf("Init Result: %ld\n", result);
+    int i = 0;
+
+    while (instructions[i].instruction != NULL) {
+        result++;
+        printf("Result: %ld\n", result);
+        if (instructions[i].arguments[0] != NULL) {
+            if (str_is_int(instructions[i].arguments[0])) {
+                result += 4;
+            } else {
+                printf("str: %s\n", instructions[i].arguments[0]);
+                printf("strlen: %d\n", my_strlen(instructions[i].arguments[0]));
+                result += my_strlen(instructions[i].arguments[0]);
+            }
+            if (instructions[i].arguments[1] != NULL) {
+                if (str_is_int(instructions[i].arguments[0])) {
+                    result += 4;
+                } else {
+                    printf("str: %s\n", instructions[i].arguments[0]);
+                    printf("strlen: %d\n", my_strlen(instructions[i].arguments[0]));
+                    result += my_strlen(instructions[i].arguments[0]);
+                }
+            }
+        }
+        i++;
+        printf("Result: %ld\n\n", result);
+    }
     return result;
 }
