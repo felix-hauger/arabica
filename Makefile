@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -MMD 
+CFLAGS = -Wall -Wextra -Werror -I -MMD 
 NAME = arabica
 SRC_DIR = src/
 BUILD_DIR = build/
