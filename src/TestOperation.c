@@ -78,3 +78,40 @@ void writeStringForCompile(int filedes, char *input)
 {
     write(filedes, input, strlen(input));
 }
+
+void writeInstructionsInBytes(int filedes, _Instruction *instructions)
+{
+    for (int i = 0; instructions[i].instruction != NULL; i++) {
+        _Instruction* instruction = &instructions[i];
+
+        //write to file the code for the instruction
+        write(filedes, &instruction->code, 1);
+
+        // if the args are declared ( not "No arg" ) write them to the file
+        if (instruction->arguments[0] != NULL) {
+            if (str_is_digit(instruction->arguments[0])) {  //check if it is a integer
+                writeIntegerForCompile(filedes, atoi(instruction->arguments[0])); 
+            } else {
+                writeStringForCompile(filedes, instruction->arguments[0]);//else its an string
+            }
+            //if arg 2 is declared write it to the file
+            if (instruction->arguments[1] != NULL) {
+                if (str_is_digit(instruction->arguments[1])) {
+                    writeIntegerForCompile(filedes, atoi(instruction->arguments[1]));
+                } else {
+                    writeStringForCompile(filedes, instruction->arguments[1]);
+                }
+            }
+        }
+    }
+}
+
+void display_error(char *error_message)
+{
+    printf("Error: %s\n", error_message);
+}
+
+void display_help()
+{
+    printf("Usage: ./arabica <abcProgramFile> <destinationFile>\n");
+}
