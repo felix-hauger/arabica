@@ -35,6 +35,8 @@ void writeStringForCompile(int filedes, char *input);
 _Instruction *parse_abc(char *file_name);
 size_t get_program_size(_Instruction *instructions);
 void writeInstructionsInBytes(int filedes, _Instruction *instructions);
+void display_error(char *error_message);
+void display_help();
 
 // Utils
 char *my_strcpy(char *dest, char *src);

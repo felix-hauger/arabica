@@ -1,3 +1,4 @@
+#include <stdio.h>
 #define NUM_OPERATIONS 28
 #include "arabica.h"
 
@@ -89,4 +90,14 @@ void writeInstructionsInBytes(int filedes, _Instruction *instructions)
             }
         }
     }
+}
+
+void display_error(char *error_message)
+{
+    printf("Error: %s\n", error_message);
+}
+
+void display_help()
+{
+    printf("Usage: ./arabica <abcProgramFile> <destinationFile>\n");
 }

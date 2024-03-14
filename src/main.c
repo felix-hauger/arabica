@@ -11,9 +11,17 @@ int main(int argc, char **argv)
         i++;
     }
 
+    if (argv[1] == NULL) {
+        display_error("Missing .abc file");
+        display_help();
+        return 1;
+    }
+
+    char *abcFileName = argv[1];
+
     char *programName = "abcdefghijklmnop";
 
-    _Instruction *instructions = parse_abc("example.abc");
+    _Instruction *instructions = parse_abc(abcFileName);
 
     int programSize = get_program_size(instructions);
 
