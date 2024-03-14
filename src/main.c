@@ -11,13 +11,13 @@ int main(int argc, char **argv)
         i++;
     }
 
-    char *programName = "abcdefghijklmnop";
+    char *programName = "ArabicaTest";
 
     // Open file with read / write, create it if it doesn't exist
     int filedes = open("bytecode", O_CREAT | O_RDWR);
 
     // char *processName = getName(argc, argv); // get the name of the process
-    writeHeader(filedes, 20, programName);
+    writeHeader(filedes, 18, programName);
 
     /*
     char load_val = getFunctionCodeFromName("LOAD_VAL");
