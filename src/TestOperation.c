@@ -34,7 +34,7 @@ int getFunctionCodeFromName(char *functionName) {
     };
 
     for (int i = 0; i < NUM_OPERATIONS; ++i) {
-        if(strcmp(functionName,operations[i]) == 0){
+        if(strcmp(functionName, operations[i]) == 0) {
             return ++i;
         }
     }
@@ -58,7 +58,7 @@ void writeHeader(int filedes, int programSize, char *programName)
     } else if (len == PROGRAM_NAME_SIZE){
         writeStringForCompile(filedes, programName); // WRITE Program name if the length of the program name is = 16
     } else{
-        printf("ERROR : Program name is too long\n");
+        printf("ERROR: Program name is too long\n");
         exit(1);
     }
    
@@ -89,17 +89,24 @@ void writeInstructionsInBytes(int filedes, _Instruction *instructions)
 
         // if the args are declared ( not "No arg" ) write them to the file
         if (instruction->arguments[0] != NULL) {
-            if (str_is_digit(instruction->arguments[0])) {  //check if it is a integer
-                writeIntegerForCompile(filedes, atoi(instruction->arguments[0])); 
+
+            if (my_strcmp(instruction->instruction, "LOAD_STR") == 0) {
+                char length = my_strlen(instruction->arguments[0]);
+                write(filedes, &length, 1);
+                writeStringForCompile(filedes, instruction->arguments[0]);
             } else {
-                writeStringForCompile(filedes, instruction->arguments[0]);//else its an string
-            }
-            //if arg 2 is declared write it to the file
-            if (instruction->arguments[1] != NULL) {
-                if (str_is_digit(instruction->arguments[1])) {
-                    writeIntegerForCompile(filedes, atoi(instruction->arguments[1]));
+                if (str_is_digit(instruction->arguments[0])) {  //check if it is a integer
+                    writeIntegerForCompile(filedes, atoi(instruction->arguments[0])); 
                 } else {
-                    writeStringForCompile(filedes, instruction->arguments[1]);
+                    writeStringForCompile(filedes, instruction->arguments[0]);//else its an string
+                }
+                //if arg 2 is declared write it to the file
+                if (instruction->arguments[1] != NULL) {
+                    if (str_is_digit(instruction->arguments[1])) {
+                        writeIntegerForCompile(filedes, atoi(instruction->arguments[1]));
+                    } else {
+                        writeStringForCompile(filedes, instruction->arguments[1]);
+                    }
                 }
             }
         }
