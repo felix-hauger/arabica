@@ -83,31 +83,49 @@ void writeInstructionsInBytes(int filedes, _Instruction *instructions)
 {
     for (int i = 0; instructions[i].instruction != NULL; i++) {
         _Instruction* instruction = &instructions[i];
-
+        printf("Instruction: %d\n", instruction->code);
         //write to file the code for the instruction
         write(filedes, &instruction->code, 1);
-
+        printf("Instruction: %d a été ecrit\n", instruction->code);
         // if the args are declared ( not "No arg" ) write them to the file
         if (instruction->arguments[0] != NULL) {
 
             if (my_strcmp(instruction->instruction, "LOAD_STR") == 0) {
-                char length = my_strlen(instruction->arguments[0]);
-                write(filedes, &length, 1);
-                writeStringForCompile(filedes, instruction->arguments[0]);
-            } else {
-                if (str_is_digit(instruction->arguments[0])) {  //check if it is a integer
-                    writeIntegerForCompile(filedes, atoi(instruction->arguments[0])); 
-                } else {
-                    writeStringForCompile(filedes, instruction->arguments[0]);//else its an string
+                char length = (my_strlen(instruction->arguments[0])-2);  // get the length of the string
+                write(filedes, &length, 1);  // write the length of the string
+
+                if(instruction->arguments[0][0]== '"' && instruction->arguments[0][strlen(instruction->arguments[0])-1] == '"' ){ // if first and last element of the string is "
+                    instruction->arguments[0][strlen(instruction->arguments[0])-1] = '\0'; // remove the last "
+                    writeStringForCompile(filedes, instruction->arguments[0]+1);  // write the string to the file without the first "
+
+                }else{
+                    printf("ERROR : Invalid string format\n");
+                    exit(1);
                 }
-                //if arg 2 is declared write it to the file
-                if (instruction->arguments[1] != NULL) {
-                    if (str_is_digit(instruction->arguments[1])) {
-                        writeIntegerForCompile(filedes, atoi(instruction->arguments[1]));
-                    } else {
-                        writeStringForCompile(filedes, instruction->arguments[1]);
-                    }
+                
+            }else if (str_is_digit(instruction->arguments[0])) {  //check if it is a integer
+                writeIntegerForCompile(filedes, atoi(instruction->arguments[0]));   //write the integer to the file
+            }else{
+                printf("ERROR : Invalid arg format\n");  // if the arg is not a integer or a string is format is invalid
+                exit(1);
+            }
+
+            //if arg 2 is declared write it to the file
+            if (instruction->arguments[1] != NULL) {
+               if(instruction->arguments[0][0]== '"' && instruction->arguments[0][strlen(instruction->arguments[0])-1] == '"' ){ // if first and last element of the string is "
+                    instruction->arguments[0][strlen(instruction->arguments[0])-1] = '\0'; // remove the last "
+                    writeStringForCompile(filedes, instruction->arguments[0]+1);  // write the string to the file without the first "
+
+                }else{
+                    printf("ERROR : Invalid string format\n");
+                    exit(1);
+                }if (str_is_digit(instruction->arguments[0])) {  //check if it is a integer
+                    writeIntegerForCompile(filedes, atoi(instruction->arguments[0]));   //write the integer to the file
+                }else{
+                    printf("ERROR : Invalid arg format\n");  // if the arg is not a integer or a string is format is invalid
+                    exit(1);
                 }
+                
             }
         }
     }
