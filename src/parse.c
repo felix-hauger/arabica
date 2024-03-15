@@ -83,10 +83,23 @@ size_t get_program_size(_Instruction *instructions)
     while (instructions[i].instruction != NULL) {
         result++;
         printf("Program size: %ld\n", result);
+
         if (instructions[i].arguments[0] != NULL) {
+            // if the instruction is LOAD_STR, we need to add the length of the string minus the quotes that will be deleted later, we should remove  bytes ,
+            // but since we also print the size of the string in one byte, it would cause problems, to make it simpler we only remove 1
+            if(instructions[i].arguments[0][0]== '"' && instructions[i].arguments[0][strlen(instructions[i].arguments[0])-1] == '"' ){ // if first and last element of the string is "
+                result += (get_argument_size(instructions[i].arguments[0]))-1;
+            }else {
                 result += get_argument_size(instructions[i].arguments[0]);
+            }
+
+            
             if (instructions[i].arguments[1] != NULL) {
-                result += get_argument_size(instructions[i].arguments[0]);
+                if(instructions[i].arguments[1][0]== '"' && instructions[i].arguments[1][strlen(instructions[i].arguments[1])-1] == '"' ){ // if first and last element of the string is "
+                    result += (get_argument_size(instructions[i].arguments[1]))-1;
+                }else {
+                    result += get_argument_size(instructions[i].arguments[1]);
+                }
             }
         }
         i++;

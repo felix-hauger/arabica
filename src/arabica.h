@@ -45,5 +45,6 @@ char **split(char *s, char *delim);
 char *trim(char *s);
 int str_is_digit(char *s);
 int my_strlen(char *s);
+int my_strcmp(char *s1, char *s2);
 
 #endif
