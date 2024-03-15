@@ -7,14 +7,14 @@ _Instruction *parse_abc(char *filename)
     FILE *filedes = fopen(filename , "r");
 
     if (filedes == NULL) {
-        printf("Error: file not found\n");
+        display_error(".abc file not found");
         return NULL;
     }
 
     _Instruction *result = malloc(sizeof(_Instruction) * 100);
 
     if (result == NULL) {
-        printf("Error: memory allocation failed\n");
+        display_error("memory allocation failed");
         return NULL;
     }
 
