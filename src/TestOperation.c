@@ -39,6 +39,19 @@ int getFunctionCodeFromName(char *functionName) {
         }
     }
 
+    // If the function name is not found, display an error message and exit
+    char *error_message = (char*)malloc(sizeof(char) * (23 + my_strlen(functionName)));
+
+    my_strcpy(error_message, "Invalid function name: ");
+
+    strcat(error_message, functionName);
+
+    display_error(error_message);
+
+    free(error_message);
+
+    exit(0);
+
     return 0;
 }
 

@@ -30,21 +30,23 @@ _Instruction *parse_abc(char *filename)
 
         fgets(line, MAX_LINE_SIZE, filedes);
 
-        printf("  %s\n", line);
-        char **splitted_line = split(line, " ");
+        // Test if line is empty
+        if (my_strlen(trim(line)) > 0) {
+            printf("  %s\n", line);
+            char **splitted_line = split(line, " ");
 
-        current_instruction.instruction = my_strdup(trim(splitted_line[0]));
-        current_instruction.code = getFunctionCodeFromName(current_instruction.instruction);
-        if (splitted_line[1] != NULL) {
-            current_instruction.arguments[0] = my_strdup(trim(splitted_line[1]));
-            if (splitted_line[2] != NULL) {
-                current_instruction.arguments[1] = my_strdup(trim(splitted_line[2]));
+            current_instruction.instruction = my_strdup(trim(splitted_line[0]));
+            current_instruction.code = getFunctionCodeFromName(current_instruction.instruction);
+            if (splitted_line[1] != NULL) {
+                current_instruction.arguments[0] = my_strdup(trim(splitted_line[1]));
+                if (splitted_line[2] != NULL) {
+                    current_instruction.arguments[1] = my_strdup(trim(splitted_line[2]));
+                }
             }
+            result[current_result_index] = current_instruction;
+            
+            current_result_index++;
         }
-
-        result[current_result_index] = current_instruction;
-        
-        current_result_index++;
     }
 
     // int i = 0;
