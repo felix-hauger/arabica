@@ -38,10 +38,14 @@ _Instruction *parse_abc(char *filename)
                 }
             }
             result[current_result_index] = current_instruction;
+
+            free(splitted_line);
             
             current_result_index++;
         }
     }
+
+    free(line);
 
     // int i = 0;
 
