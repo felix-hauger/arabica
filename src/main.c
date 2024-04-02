@@ -28,7 +28,7 @@ int main(int argc, char **argv)
     int programSize = get_program_size(instructions);
 
     // Open file with read / write, create it if it doesn't exist
-    int bytecodeFile = open("bytecode", O_CREAT | O_RDWR);
+    int bytecodeFile = open("bytecode", O_CREAT | O_RDWR, 0664);
 
     writeHeader(bytecodeFile, programSize, programName);
 
