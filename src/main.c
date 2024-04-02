@@ -34,5 +34,18 @@ int main(int argc, char **argv)
 
     writeInstructionsInBytes(bytecodeFile, instructions);
 
+    close(bytecodeFile);
+
+    i = 0;
+
+    while (instructions[i].instruction != NULL) {
+        free(instructions[i].instruction);
+        free(instructions[i].arguments[0]);
+        free(instructions[i].arguments[1]);
+        i++;
+    }
+
+    free(instructions);
+
     return 0;
 }
