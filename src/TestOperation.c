@@ -60,8 +60,6 @@ void writeHeader(int filedes, int programSize, char *programName)
         }
     } else if (len == PROGRAM_NAME_SIZE) {
         writeStringForCompile(filedes, programName); // WRITE Program name if the length of the program name is = 16
-    } else {
-        handle_error("Program name too long. Max length: ", my_itoa(PROGRAM_NAME_SIZE), 1);
     }
 }
 

@@ -19,6 +19,10 @@ int main(int argc, char **argv)
 
     char *programName = "abcdefghidqq";
 
+    if (my_strlen(programName) > PROGRAM_NAME_SIZE) {
+        handle_error("Program name too long. Max length: ", my_itoa(PROGRAM_NAME_SIZE), 1);
+    }
+
     _Instruction *instructions = parse_abc(abcFileName);
 
     int programSize = get_program_size(instructions);
