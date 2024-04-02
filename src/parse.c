@@ -7,16 +7,10 @@ _Instruction *parse_abc(char *filename)
     FILE *filedes = fopen(filename , "r");
 
     if (filedes == NULL) {
-        display_error(".abc file not found");
-        return NULL;
+        handle_error(".abc file not found", filename, 1);
     }
 
     _Instruction *result = malloc(sizeof(_Instruction) * 100);
-
-    if (result == NULL) {
-        display_error("memory allocation failed");
-        return NULL;
-    }
 
     char *line = (char*)malloc(sizeof(char) * MAX_LINE_SIZE);
 
@@ -99,7 +93,7 @@ size_t get_program_size(_Instruction *instructions)
             if (instructions[i].arguments[1] != NULL) {
                 if(instructions[i].arguments[1][0]== '"' && instructions[i].arguments[1][strlen(instructions[i].arguments[1])-1] == '"' ){ // if first and last element of the string is "
                     result += (get_argument_size(instructions[i].arguments[1]))-1;
-                }else {
+                } else {
                     result += get_argument_size(instructions[i].arguments[1]);
                 }
             }

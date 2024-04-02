@@ -40,17 +40,7 @@ int getFunctionCodeFromName(char *functionName) {
     }
 
     // If the function name is not found, display an error message and exit
-    char *error_message = (char*)malloc(sizeof(char) * (23 + my_strlen(functionName)));
-
-    my_strcpy(error_message, "Invalid function name: ");
-
-    strcat(error_message, functionName);
-
-    display_error(error_message);
-
-    free(error_message);
-
-    exit(0);
+    handle_error("Invalid function name", functionName, 1);
 
     return 0;
 }
@@ -70,9 +60,8 @@ void writeHeader(int filedes, int programSize, char *programName)
         }
     } else if (len == PROGRAM_NAME_SIZE) {
         writeStringForCompile(filedes, programName); // WRITE Program name if the length of the program name is = 16
-    } else{
-        printf("ERROR: Program name is too long\n");
-        exit(1);
+    } else {
+        handle_error("Program name too long. Max length: ", my_itoa(PROGRAM_NAME_SIZE), 1);
     }
 }
 
@@ -96,7 +85,7 @@ void writeInstructionsInBytes(int filedes, _Instruction *instructions)
         printf("Instruction: %d\n", instruction->code);
         // write to file the code for the instruction
         write(filedes, &instruction->code, 1);
-        printf("Instruction: %d a été ecrit\n", instruction->code);
+        printf("Instruction: %d a été écrit\n", instruction->code);
         // if the args are declared write them to the file
         if (instruction->arguments[0] != NULL) {
 
@@ -109,15 +98,13 @@ void writeInstructionsInBytes(int filedes, _Instruction *instructions)
                     writeStringForCompile(filedes, instruction->arguments[0]+1);  // write the string to the file without the first "
 
                 } else {
-                    display_error("Invalid string format");
-                    exit(1);
+                    handle_error("Invalid string format", "Quotes (\") expected", 1);
                 }
                 
             } else if (str_is_digit(instruction->arguments[0])) {  //check if it is a integer
                 writeIntegerForCompile(filedes, atoi(instruction->arguments[0]));   //write the integer to the file
             } else {
-                display_error("Invalid arg format");  // if the arg is not a integer or a string is format is invalid
-                exit(1);
+                handle_error("Invalid arg format", "Integer or string expected", 1);  // if the arg is not a integer or a string is format is invalid
             }
 
             //if arg 2 is declared write it to the file
@@ -126,27 +113,22 @@ void writeInstructionsInBytes(int filedes, _Instruction *instructions)
                     instruction->arguments[1][strlen(instruction->arguments[1])-1] = '\0'; // remove the last "
                     writeStringForCompile(filedes, instruction->arguments[1]+1);  // write the string to the file without the first "
                 } else {
-                    display_error("Invalid string format");
-                    exit(1);
+                    handle_error("Invalid string format", "Quotes (\") expected", 1);
                 }
 
                 if (str_is_digit(instruction->arguments[1])) {  //check if it is a integer
                     writeIntegerForCompile(filedes, atoi(instruction->arguments[1]));   //write the integer to the file
                 } else {
-                    display_error("Invalid arg format");  // if the arg is not a integer or a string is format is invalid
-                    exit(1);
+                    handle_error("Invalid arg format", "Integer or string expected", 1);  // if the arg is not a integer or a string is format is invalid
                 }
             }
         }
     }
 }
 
-void display_error(char *error_message)
+void handle_error(char *error_message, char *hint, int exit_code)
 {
-    printf("\033[1;31mError: %s\033[0m\n", error_message);
-}
+    printf("\033[1;31mError: %s (%s)\033[0m\n", error_message, hint);
 
-void display_help()
-{
-    printf("Usage: ./arabica <abcProgramFile>\n");
+    exit(exit_code);
 }

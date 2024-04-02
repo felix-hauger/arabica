@@ -12,14 +12,12 @@ int main(int argc, char **argv)
     }
 
     if (argv[1] == NULL) {
-        display_error("Missing .abc file");
-        display_help();
-        return 1;
+        handle_error("Missing .abc file", "Usage: ./arabica <abcProgramFile>", 1);
     }
 
     char *abcFileName = argv[1];
 
-    char *programName = "abcdefghijklmnop";
+    char *programName = "abcdefghidqq";
 
     _Instruction *instructions = parse_abc(abcFileName);
 
