@@ -18,7 +18,7 @@
 
 // Structures
 typedef struct Instruction {
-    char *instruction;
+    char *instruction; // Probably not needed anymore
     char code; // Instruction code stored on 1 byte
     char *arguments[ARGUMENTS_MAX_NUM];
     int size; // Maybe not needed
@@ -35,8 +35,7 @@ void writeStringForCompile(int filedes, char *input);
 _Instruction *parse_abc(char *file_name);
 size_t get_program_size(_Instruction *instructions);
 void writeInstructionsInBytes(int filedes, _Instruction *instructions);
-void display_error(char *error_message);
-void display_help();
+void handle_error(char *error_message, char *hint, int exit_code);
 
 // Utils
 char *my_strcpy(char *dest, char *src);
@@ -46,5 +45,6 @@ char *trim(char *s);
 int str_is_digit(char *s);
 int my_strlen(char *s);
 int my_strcmp(char *s1, char *s2);
+char *my_itoa(int n);
 
 #endif

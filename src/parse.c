@@ -7,16 +7,10 @@ _Instruction *parse_abc(char *filename)
     FILE *filedes = fopen(filename , "r");
 
     if (filedes == NULL) {
-        printf("Error: file not found\n");
-        return NULL;
+        handle_error(".abc file not found", filename, 1);
     }
 
     _Instruction *result = malloc(sizeof(_Instruction) * 100);
-
-    if (result == NULL) {
-        printf("Error: memory allocation failed\n");
-        return NULL;
-    }
 
     char *line = (char*)malloc(sizeof(char) * MAX_LINE_SIZE);
 
@@ -30,22 +24,28 @@ _Instruction *parse_abc(char *filename)
 
         fgets(line, MAX_LINE_SIZE, filedes);
 
-        printf("  %s\n", line);
-        char **splitted_line = split(line, " ");
+        // Test if line is empty
+        if (my_strlen(trim(line)) > 0) {
+            printf("  %s\n", line);
+            char **splitted_line = split(line, " ");
 
-        current_instruction.instruction = my_strdup(trim(splitted_line[0]));
-        current_instruction.code = getFunctionCodeFromName(current_instruction.instruction);
-        if (splitted_line[1] != NULL) {
-            current_instruction.arguments[0] = my_strdup(trim(splitted_line[1]));
-            if (splitted_line[2] != NULL) {
-                current_instruction.arguments[1] = my_strdup(trim(splitted_line[2]));
+            current_instruction.instruction = my_strdup(trim(splitted_line[0]));
+            current_instruction.code = getFunctionCodeFromName(current_instruction.instruction);
+            if (splitted_line[1] != NULL) {
+                current_instruction.arguments[0] = my_strdup(trim(splitted_line[1]));
+                if (splitted_line[2] != NULL) {
+                    current_instruction.arguments[1] = my_strdup(trim(splitted_line[2]));
+                }
             }
-        }
+            result[current_result_index] = current_instruction;
 
-        result[current_result_index] = current_instruction;
-        
-        current_result_index++;
+            free(splitted_line);
+            
+            current_result_index++;
+        }
     }
+
+    free(line);
 
     // int i = 0;
 
@@ -97,7 +97,7 @@ size_t get_program_size(_Instruction *instructions)
             if (instructions[i].arguments[1] != NULL) {
                 if(instructions[i].arguments[1][0]== '"' && instructions[i].arguments[1][strlen(instructions[i].arguments[1])-1] == '"' ){ // if first and last element of the string is "
                     result += (get_argument_size(instructions[i].arguments[1]))-1;
-                }else {
+                } else {
                     result += get_argument_size(instructions[i].arguments[1]);
                 }
             }
