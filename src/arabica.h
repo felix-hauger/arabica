@@ -27,17 +27,20 @@ typedef struct Instruction {
 // Include external C libraries below
 
 // Write project's functions signatures below
-char* getName(int argc, char *argv[]);
+
+// Analyze
 int getFunctionCodeFromName(char *functionName);
+_Instruction *parse_abc(char *file_name);
+size_t get_program_size(_Instruction *instructions);
+
+// Compile
 void writeHeader(int filedes, int programSize, char *programName);
 void writeIntegerForCompile(int filedes, int integer);
 void writeStringForCompile(int filedes, char *input);
-_Instruction *parse_abc(char *file_name);
-size_t get_program_size(_Instruction *instructions);
 void writeInstructionsInBytes(int filedes, _Instruction *instructions);
-void handle_error(char *error_message, char *hint, int exit_code);
 
 // Utils
+void handle_error(char *error_message, char *hint, int exit_code);
 char *my_strcpy(char *dest, char *src);
 char *my_strdup(char *src);
 char **split(char *s, char *delim);

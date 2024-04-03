@@ -1,6 +1,7 @@
 #include "arabica.h"
 
 #define MAX_LINE_SIZE 150
+#define NUM_OPERATIONS 28
 
 _Instruction *parse_abc(char *filename)
 {
@@ -58,6 +59,50 @@ _Instruction *parse_abc(char *filename)
     return result;
 }
 
+
+int getFunctionCodeFromName(char *functionName) {
+    const char *operations[NUM_OPERATIONS] = {
+        "LOAD_VAL",
+        "READ_VAR",
+        "STORE_VAR",
+        "ADD",
+        "SUB",
+        "MUL",
+        "DIV",
+        "MOD",
+        "JMP",
+        "JMP_IF_ZERO",
+        "JMP_IF_TRUE",
+        "EQ",
+        "NEQ",
+        "GT",
+        "LT",
+        "GTE",
+        "LTE",
+        "PRINT_VAL",
+        "INPUT_VAL",
+        "HALT",
+        "LOAD_STR",
+        "PRINT_STR",
+        "INPUT_STR",
+        "STR_LEN",
+        "CONCAT",
+        "GET_CHAR",
+        "SET_CHAR",
+        "STR_CMP"
+    };
+
+    for (int i = 0; i < NUM_OPERATIONS; ++i) {
+        if(strcmp(functionName, operations[i]) == 0) {
+            return ++i;
+        }
+    }
+
+    // If the function name is not found, display an error message and exit
+    handle_error("Invalid function name", functionName, 1);
+
+    return 0;
+}
 
 size_t get_argument_size(char *arg)
 {
