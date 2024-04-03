@@ -16,13 +16,11 @@ _Instruction *parse_abc(char *filename)
 
     int current_result_index = 0;
 
-    while (!feof(filedes)) {
+    while (fgets(line, MAX_LINE_SIZE, filedes)) {
         struct Instruction current_instruction;
 
         current_instruction.arguments[0] = NULL;
         current_instruction.arguments[1] = NULL;
-
-        fgets(line, MAX_LINE_SIZE, filedes);
 
         // Test if line is empty
         if (my_strlen(trim(line)) > 0) {
