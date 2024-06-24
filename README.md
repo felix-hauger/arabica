@@ -32,7 +32,7 @@ Compiler to create binaries for the AraBiCa VM.
 |18|0|1|STR_LEN : Dépile une référence à une chaîne et empile la longueur de celle-ci (int32).|
 |19|0|2|CONCAT : Dépile deux références à des chaînes, les concatène et empile la référence au résultat.|
 |1A|0|1|GET_CHAR : Dépile une référence à une chaîne (uint8) et un indice (uint8), puis empile le caractère à cet indice (char).|
-|1B|3|0|SET_CHAR : Dépile un caractère (char), un indice (uint8) et une référence à une chaîne (uint8), et insère le caractère à l'indice spécifié.|
+|1B|0|3|SET_CHAR : Dépile un caractère (char), un indice (uint8) et une référence à une chaîne (uint8), et insère le caractère à l'indice spécifié.|
 |1C|0|2|STR_CMP : Dépile deux références à des chaînes, les compare et empile le résultat.|
 
 
@@ -41,3 +41,4 @@ The compiled file must have one header formatted like the following:
 - 4 bytes indicating the size of the code itself (header excluded)
 - 16 bytes for the program name
 Totalling an amount of 24 bytes.
+(')
