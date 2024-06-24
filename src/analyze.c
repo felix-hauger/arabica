@@ -46,16 +46,6 @@ _Instruction *parse_abc(char *filename)
 
     free(line);
 
-    // int i = 0;
-
-    // while (result[i].instruction != NULL) {
-    //     printf("Instruction: %s\n", result[i].instruction);
-    //     printf("Code: %d\n", result[i].code);
-    //     printf("Argument 1: %s\n", result[i].arguments[0]);
-    //     printf("Argument 2: %s\n", result[i].arguments[1]);
-    //     i++;
-    // }
-
     return result;
 }
 

@@ -24,10 +24,6 @@ typedef struct Instruction {
     int size; // Maybe not needed
 }_Instruction;
 
-// Include external C libraries below
-
-// Write project's functions signatures below
-
 // Analyze
 int getFunctionCodeFromName(char *functionName);
 _Instruction *parse_abc(char *file_name);
