@@ -1,6 +1,5 @@
 #include "arabica.h"
 
-
 void writeHeader(int filedes, int programSize, char *programName)
 {
     write(filedes, "CODE", 4); // WRITE CODE

@@ -98,8 +98,14 @@ size_t get_argument_size(char *arg)
     size_t result;
 
     if (str_is_digit(arg)) {
-        //! Might need to test if the value is too high for an int
-        result = 4;
+        // Need to test if the value is too high for an int.
+        // If the value is too high for a standard int, the
+        // arabica vm will not be able to handle it correctly.
+        if (atoll(arg) > 2147483647) {
+            handle_error("One of your integer arguments has a too high value", "Max value: 2147483647", 1);
+        } else {
+            result = 4;
+        }
     } else {
         result = my_strlen(arg);
     }
@@ -125,7 +131,6 @@ size_t get_program_size(_Instruction *instructions)
                 result += get_argument_size(instructions[i].arguments[0]);
             }
 
-            
             if (instructions[i].arguments[1] != NULL) {
                 if (instructions[i].arguments[1][0] == '"' && instructions[i].arguments[1][strlen(instructions[i].arguments[1])-1] == '"' ) { // if first and last element of the string is "
                     result += (get_argument_size(instructions[i].arguments[1]))-1;
@@ -134,6 +139,7 @@ size_t get_program_size(_Instruction *instructions)
                 }
             }
         }
+
         i++;
         printf("Program size: %ld\n\n", result);
     }
