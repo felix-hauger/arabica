@@ -1,4 +1,6 @@
+*.d
 .vscode/
 *.o
 arabica
 test*
+bytecode

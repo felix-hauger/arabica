@@ -1,16 +1,20 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -I -MMD 
 NAME = arabica
-SRC = arabica.c
-OBJ = $(SRC:.c=.o)
+SRC_DIR = src/
+BUILD_DIR = build/
+SRC = main.c analyze.c compile.c utils.c
+SRCS = $(addprefix $(SRC_DIR), $(SRC))
+OBJ = $(SRCS:$(SRC_DIR)%.c=$(BUILD_DIR)%.o)
 
 all: $(NAME)
 
-$(OBJ): $(SRC)
-	$(CC) $(CFLAGS) -c $(SRC)
-
 $(NAME): $(OBJ)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJ)
+	$(CC) -o $@ $^
+
+$(BUILD_DIR)%.o: $(SRC_DIR)%.c
+	$(shell mkdir -p $(BUILD_DIR))
+	$(CC) $(CFLAGS) -c -o $@ $<
 
 clean:
 	rm -f $(OBJ)
