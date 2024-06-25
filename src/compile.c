@@ -35,10 +35,10 @@ void writeInstructionsInBytes(int filedes, _Instruction *instructions)
 {
     for (int i = 0; instructions[i].instruction != NULL; i++) {
         _Instruction* instruction = &instructions[i];
-        printf("Instruction: %d\n", instruction->code);
+
         // write to file the code for the instruction
         write(filedes, &instruction->code, 1);
-        printf("Instruction: %d a été écrit\n", instruction->code);
+
         // if the args are declared write them to the file
         if (instruction->arguments[0] != NULL) {
 
@@ -53,7 +53,6 @@ void writeInstructionsInBytes(int filedes, _Instruction *instructions)
                 } else {
                     handle_error("Invalid string format", "Quotes (\") expected", 1);
                 }
-                
             } else if (str_is_digit(instruction->arguments[0])) {  //check if it is a integer
                 writeIntegerForCompile(filedes, atoi(instruction->arguments[0]));   //write the integer to the file
             } else {

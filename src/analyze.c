@@ -120,7 +120,6 @@ size_t get_program_size(_Instruction *instructions)
 
     while (instructions[i].instruction != NULL) {
         result++;
-        printf("Program size: %ld\n", result);
 
         if (instructions[i].arguments[0] != NULL) {
             // if the instruction is LOAD_STR, we need to add the length of the string minus the quotes that will be deleted later, we should remove  bytes ,
@@ -141,7 +140,6 @@ size_t get_program_size(_Instruction *instructions)
         }
 
         i++;
-        printf("Program size: %ld\n\n", result);
     }
     return result;
 }
