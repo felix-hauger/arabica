@@ -1,6 +1,7 @@
 #include "arabica.h"
 
 #define MAX_LINE_SIZE 150
+#define NUM_OPERATIONS 28
 
 _Instruction *parse_abc(char *filename)
 {
@@ -16,13 +17,11 @@ _Instruction *parse_abc(char *filename)
 
     int current_result_index = 0;
 
-    while (!feof(filedes)) {
+    while (fgets(line, MAX_LINE_SIZE, filedes)) {
         struct Instruction current_instruction;
 
         current_instruction.arguments[0] = NULL;
         current_instruction.arguments[1] = NULL;
-
-        fgets(line, MAX_LINE_SIZE, filedes);
 
         // Test if line is empty
         if (my_strlen(trim(line)) > 0) {
@@ -47,27 +46,66 @@ _Instruction *parse_abc(char *filename)
 
     free(line);
 
-    // int i = 0;
-
-    // while (result[i].instruction != NULL) {
-    //     printf("Instruction: %s\n", result[i].instruction);
-    //     printf("Code: %d\n", result[i].code);
-    //     printf("Argument 1: %s\n", result[i].arguments[0]);
-    //     printf("Argument 2: %s\n", result[i].arguments[1]);
-    //     i++;
-    // }
-
     return result;
 }
 
+int getFunctionCodeFromName(char *functionName) {
+    const char *operations[NUM_OPERATIONS] = {
+        "LOAD_VAL",
+        "READ_VAR",
+        "STORE_VAR",
+        "ADD",
+        "SUB",
+        "MUL",
+        "DIV",
+        "MOD",
+        "JMP",
+        "JMP_IF_ZERO",
+        "JMP_IF_TRUE",
+        "EQ",
+        "NEQ",
+        "GT",
+        "LT",
+        "GTE",
+        "LTE",
+        "PRINT_VAL",
+        "INPUT_VAL",
+        "HALT",
+        "LOAD_STR",
+        "PRINT_STR",
+        "INPUT_STR",
+        "STR_LEN",
+        "CONCAT",
+        "GET_CHAR",
+        "SET_CHAR",
+        "STR_CMP"
+    };
+
+    for (int i = 0; i < NUM_OPERATIONS; ++i) {
+        if(strcmp(functionName, operations[i]) == 0) {
+            return ++i;
+        }
+    }
+
+    // If the function name is not found, display an error message and exit
+    handle_error("Invalid function name", functionName, 1);
+
+    return 0;
+}
 
 size_t get_argument_size(char *arg)
 {
     size_t result;
 
     if (str_is_digit(arg)) {
-        //! Might need to test if the value is too high for an int
-        result = 4;
+        // Need to test if the value is too high for an int.
+        // If the value is too high for a standard int, the
+        // arabica vm will not be able to handle it correctly.
+        if (atoll(arg) > 2147483647) {
+            handle_error("One of your integer arguments has a too high value", "Max value: 2147483647", 1);
+        } else {
+            result = 4;
+        }
     } else {
         result = my_strlen(arg);
     }
@@ -82,28 +120,26 @@ size_t get_program_size(_Instruction *instructions)
 
     while (instructions[i].instruction != NULL) {
         result++;
-        printf("Program size: %ld\n", result);
 
         if (instructions[i].arguments[0] != NULL) {
             // if the instruction is LOAD_STR, we need to add the length of the string minus the quotes that will be deleted later, we should remove  bytes ,
             // but since we also print the size of the string in one byte, it would cause problems, to make it simpler we only remove 1
-            if(instructions[i].arguments[0][0]== '"' && instructions[i].arguments[0][strlen(instructions[i].arguments[0])-1] == '"' ){ // if first and last element of the string is "
+            if (instructions[i].arguments[0][0] == '"' && instructions[i].arguments[0][strlen(instructions[i].arguments[0])-1] == '"' ) { // if first and last element of the string is "
                 result += (get_argument_size(instructions[i].arguments[0]))-1;
-            }else {
+            } else {
                 result += get_argument_size(instructions[i].arguments[0]);
             }
 
-            
             if (instructions[i].arguments[1] != NULL) {
-                if(instructions[i].arguments[1][0]== '"' && instructions[i].arguments[1][strlen(instructions[i].arguments[1])-1] == '"' ){ // if first and last element of the string is "
+                if (instructions[i].arguments[1][0] == '"' && instructions[i].arguments[1][strlen(instructions[i].arguments[1])-1] == '"' ) { // if first and last element of the string is "
                     result += (get_argument_size(instructions[i].arguments[1]))-1;
                 } else {
                     result += get_argument_size(instructions[i].arguments[1]);
                 }
             }
         }
+
         i++;
-        printf("Program size: %ld\n\n", result);
     }
     return result;
 }

@@ -1,5 +1,12 @@
 #include "arabica.h"
 
+void handle_error(char *error_message, char *hint, int exit_code)
+{
+    printf("\033[1;31mError: %s (%s)\033[0m\n", error_message, hint);
+
+    exit(exit_code);
+}
+
 int my_strlen(char *str)
 {
     int len = 0;

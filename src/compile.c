@@ -1,49 +1,4 @@
-#define NUM_OPERATIONS 28
 #include "arabica.h"
-
-int getFunctionCodeFromName(char *functionName) {
-    const char *operations[NUM_OPERATIONS] = {
-        "LOAD_VAL",
-        "READ_VAR",
-        "STORE_VAR",
-        "ADD",
-        "SUB",
-        "MUL",
-        "DIV",
-        "MOD",
-        "JMP",
-        "JMP_IF_ZERO",
-        "JMP_IF_TRUE",
-        "EQ",
-        "NEQ",
-        "GT",
-        "LT",
-        "GTE",
-        "LTE",
-        "PRINT_VAL",
-        "INPUT_VAL",
-        "HALT",
-        "LOAD_STR",
-        "PRINT_STR",
-        "INPUT_STR",
-        "STR_LEN",
-        "CONCAT",
-        "GET_CHAR",
-        "SET_CHAR",
-        "STR_CMP"
-    };
-
-    for (int i = 0; i < NUM_OPERATIONS; ++i) {
-        if(strcmp(functionName, operations[i]) == 0) {
-            return ++i;
-        }
-    }
-
-    // If the function name is not found, display an error message and exit
-    handle_error("Invalid function name", functionName, 1);
-
-    return 0;
-}
 
 void writeHeader(int filedes, int programSize, char *programName)
 {
@@ -80,10 +35,10 @@ void writeInstructionsInBytes(int filedes, _Instruction *instructions)
 {
     for (int i = 0; instructions[i].instruction != NULL; i++) {
         _Instruction* instruction = &instructions[i];
-        printf("Instruction: %d\n", instruction->code);
+
         // write to file the code for the instruction
         write(filedes, &instruction->code, 1);
-        printf("Instruction: %d a été écrit\n", instruction->code);
+
         // if the args are declared write them to the file
         if (instruction->arguments[0] != NULL) {
 
@@ -98,7 +53,6 @@ void writeInstructionsInBytes(int filedes, _Instruction *instructions)
                 } else {
                     handle_error("Invalid string format", "Quotes (\") expected", 1);
                 }
-                
             } else if (str_is_digit(instruction->arguments[0])) {  //check if it is a integer
                 writeIntegerForCompile(filedes, atoi(instruction->arguments[0]));   //write the integer to the file
             } else {
@@ -122,11 +76,4 @@ void writeInstructionsInBytes(int filedes, _Instruction *instructions)
             }
         }
     }
-}
-
-void handle_error(char *error_message, char *hint, int exit_code)
-{
-    printf("\033[1;31mError: %s (%s)\033[0m\n", error_message, hint);
-
-    exit(exit_code);
 }
