@@ -52,6 +52,8 @@ int main(int argc, char **argv)
         vmExecutable = "vm_windows.exe";
     #elif defined(__linux__)
         vmExecutable = "vm_linux";
+    #else
+        vmExecutable = "appropriate vm (linux or windows)";
     #endif
 
     printf("To run your compiled program, use the %s executable.\n", vmExecutable);
