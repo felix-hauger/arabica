@@ -21,7 +21,6 @@ typedef struct Instruction {
     char *instruction; // Probably not needed anymore
     char code; // Instruction code stored on 1 byte
     char *arguments[ARGUMENTS_MAX_NUM];
-    int size; // Maybe not needed
 }_Instruction;
 
 // Analyze
